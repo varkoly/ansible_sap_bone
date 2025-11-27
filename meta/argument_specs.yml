@@ -1,0 +1,22 @@
+# SPDX-License-Identifier: Apache-2.0
+---
+argument_specs:
+  main:
+    short_description: SAP Business One Installation
+    options: # List of variables
+
+      sap_hana_install_sid:
+        description: SAP System SID
+        type: str # str, list, dict, bool, int, float, path, raw, jsonarg, json, bytes, bits
+        required: true
+
+      sap_hana_install_number:
+        description: SAP System Instance Number
+        type: str # str, list, dict, bool, int, float, path, raw, jsonarg, json, bytes, bits
+        required: true
+      
+      sap_hana_master_password:
+        description: SAP System Master Password Number
+        type: str # str, list, dict, bool, int
+        required: true
+      
