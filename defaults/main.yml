@@ -4,11 +4,6 @@
 ################
 # Main role parameters:
 ################
-# Set which Ansible Collection to use for the Linux System Roles.
-# For community/upstream, use 'fedora.linux_system_roles'
-# For the RHEL System Roles for SAP, or for Red Hat Automation Hub, use 'redhat.rhel_system_roles'
-sap_hana_install_system_roles_collection: 'fedora.linux_system_roles'
-
 # Directory containing the IMDB SAR files and all components
 sap_hana_install_software_directory: '/software/hana'
 
@@ -21,6 +16,27 @@ sap_hana_install_software_extract_directory: "{{ sap_hana_install_software_direc
 # set the value to true. By default, this directory will not be removed
 sap_hana_install_cleanup_extract_directory: false
 
+# Directory containing the IMDB SAR files and all components
+sap_bone_install_software_directory: '/software/bone'
+
+# Directory into which the SAR files will be extracted. Defaults is {{ sap_hana_install_software_directory }}/extracted .
+# Note: In case the directory SAP_HANA_DATABASE does not exist in this directory, the directory will be removed and
+# created again before the extraction starts.
+sap_bone_install_software_extract_directory: "{{ sap_bone_install_software_directory }}/extracted"
+
+# If there is a requirement to cleanup "sap_hana_install_software_extract_directory" after SAP HANA Installation, then
+# set the value to true. By default, this directory will not be removed
+sap_hana_install_cleanup_extract_directory: false
+
+# Comma separated list of checks to ignore during HANA installation
+sap_hana_install_ignore_checks: 'check_signature_file'
+
+# SAP HANA XS routing mode. Possible values are 'ports' or 'hostname'
+# If 'hostname' is set sap_hana_install_xs_domain_name must be set also.
+sap_hana_install_xs_routing_mode: 'ports'
+
+sap_hana_install_xs_domain_name: 'ports'
+
 # Set this variable to `true` if you want to copy the SAR files from `sap_hana_install_software_directory`
 # to `sap_hana_install_software_extract_directory/sarfiles` before extracting.
 # This might be useful if the SAR files are on a slow fileshare.
@@ -29,28 +45,6 @@ sap_hana_install_copy_sarfiles: false
 # Set the following variable to `true` if you want to keep the copied SAR files. By default, the SAR files will be
 # removed after extraction.
 sap_hana_install_keep_copied_sarfiles: false
-
-# (RedHat specific) fapolicyd package is present on RedHat systems
-# For installing SAP HANA with fapolicyd support, set the following variable to `true`:
-sap_hana_install_use_fapolicyd: false
-
-# (RedHat specific) fapolicyd package is present on RedHat systems
-# When using fapolicyd, you can set the following variable to one of `none`, `size`, `sha256`, or `ima`. Note that before setting
-# to `ima`, it is essential to prepare the system accordingly (e.g. boot with a different kernel parameter). See the
-# RHEL 9 Managing, monitoring, and updating the kernel guide for more information on this topic.
-sap_hana_install_fapolicyd_integrity: 'sha256'
-
-# (RedHat specific) fapolicyd package is present on RedHat systems
-# When using fapolicyd, the following variable is used to define the fapolicyd rule file in which the rules for
-# protecting shell scripts are stored. The rule file will be created in the directory '/etc/fapolicyd/rules.d'.
-# Note: The mandatory file ending '.rules' will be added in the corresponding task of this role.
-sap_hana_install_fapolicyd_rule_file: '71-sap-shellscripts'
-
-# (RedHat specific) fapolicyd package is present on RedHat systems
-# When using fapolicyd, modify the following variable to change or add the directories which contain SAP HANA executables:
-sap_hana_install_fapolicyd_trusted_directories:
-  - "{{ sap_hana_install_root_path }}"
-  - '/usr/sap'
 
 # File name of SAPCAR*EXE in the software directory. If the variable is not set and there is more than one SAPCAR executable
 # in the software directory, the latest SAPCAR executable for the CPU architecture will be selected automatically.
