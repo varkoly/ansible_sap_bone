@@ -13,7 +13,7 @@ SLD_CERTIFICATE_ACTION=self
 SLD_DATABASE_ACTION=create
 SLD_DATABASE_NAME=SLDDATA
 # Landscape Server Address
-SLD_SERVER_ADDR={{ HOSTNAME }}
+SLD_SERVER_ADDR={{ hostname }}
 SLD_SERVER_PROTOCOL=https
 SLD_SERVER_TYPE=op
 INSTALLATION_FOLDER=/usr/sap/SAPBusinessOne
@@ -24,15 +24,15 @@ SL_LB_PORT=50000
 SL_THREAD_PER_SERVER=24
 WEBCLIENT_PORT=8443
 #### flexible part ###
-BCKP_HANA_SERVERS=<servers><server><system address="{{ hostname }}"/><database instance="{{ sap_inst_nr }}" port="3{{ sap_inst_nr }}13" tenant-db="{{ sap_sid }}" user="SYSTEM" password="{{ sap_master_password }}"/></server></servers>
-HANA_DATABASE_ADMIN_ID={{ A_SID,, }}adm
-HANA_DATABASE_TENANT_DB={{ A_SID }}
-HANA_DATABASE_INSTANCE={{ A_SAPINSTNR }}
-HANA_DATABASE_SERVER_PORT=3{{ A_SAPINSTNR }}13
-HANA_DATABASE_SERVER={{ HOSTNAME }}
-HANA_DATABASE_LOCATION={{ HOSTNAME }}
-HANA_DATABASE_ADMIN_PASSWD={{ A_MASTERPASS }}
-HANA_DATABASE_USER_PASSWORD={{ A_MASTERPASS }}
-LOCAL_ADDRESS={{ HOSTNAME }}
-SITE_USER_PASSWORD={{ A_MASTERPASS }}
+BCKP_HANA_SERVERS=<servers><server><system address="{{ hostname }}"/><database instance="{{ sap_hana_install_instance_nr }}" port="3{{ sap_hana_install_instance_nr }}13" tenant-db="{{ sap_hana_install_sid }}" user="SYSTEM" password="{{ sap_hana_install_common_master_password }}"/></server></servers>
+HANA_DATABASE_ADMIN_ID={{ sap_hana_install_sid }}adm
+HANA_DATABASE_TENANT_DB={{ sap_hana_install_sid }}
+HANA_DATABASE_INSTANCE={{ sap_hana_install_instance_nr }}
+HANA_DATABASE_SERVER_PORT=3{{ sap_hana_install_instance_nr }}13
+HANA_DATABASE_SERVER={{ hostname }}
+HANA_DATABASE_LOCATION={{ hostname }}
+HANA_DATABASE_ADMIN_PASSWD={{ sap_hana_install_common_master_password }}
+HANA_DATABASE_USER_PASSWORD={{ sap_hana_install_common_master_password }}
+LOCAL_ADDRESS={{ hostname }}
+SITE_USER_PASSWORD={{ sap_hana_install_common_master_password }}
 

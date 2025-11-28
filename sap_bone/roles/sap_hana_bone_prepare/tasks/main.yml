@@ -6,6 +6,7 @@
     name:
       - ansible-sap-install # required for the installation
       - lvm2                # required for the installation
+      - unzip               # required for the installation
       - libatomic1          # required for HANA
       - libgcc_s1           # required for HANA
       - libstdc++6          # required for HANA
@@ -27,3 +28,28 @@
     owner: root
     group: root
     mode: '0755'      # Standard permissions for system directories (rwxr-xr-x)
+
+- name: 4. Ensure "{{ sap_hana_install_software_directory }}" directory exists and has correct ownership
+  ansible.builtin.file:
+    path: "{{ sap_hana_install_software_directory }}"
+    state: directory  # Ensures the path exists as a directory
+    owner: root
+    group: root
+    mode: '0755'      # Standard permissions for system directories (rwxr-xr-x)
+
+- name: 5. Ensure "{{ sap_hana_install_software_directory }}" directory exists and has correct ownership
+  ansible.builtin.file:
+    path: "{{ sap_bone_install_software_directory }}"
+    state: directory  # Ensures the path exists as a directory
+    owner: root
+    group: root
+    mode: '0755'      # Standard permissions for system directories (rwxr-xr-x)
+
+- name: SAP Business One Pre Install, create parameters file
+  ansible.builtin.template:
+    src: "templates/b1h_properties.j2"
+    dest: "{{ sap_bone_install_software_directory }}/b1h_properties"
+    owner: 'root'
+    group: 'root'
+    mode: '0600'
+
