@@ -1,0 +1,59 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for sap_hana_bone_partitioning
+- name: Create string variable
+  set_fact:
+    disks_string: "{{ disks | join(',') }}"
+
+- name: Install lvm2 dependency
+  package:
+    name: lvm2
+    state: present
+
+- name: Task for creating volume group on "{{ disks_string }}"
+  lvg:
+      vg: "{{ lvg_name }}"
+      pvs: "{{ disks }}"
+      pesize: 16
+
+- name: Task for creating logical volumes
+  lvol:
+      vg: "{{ lvg_name }}"
+      lv: "{{ item.name }}"
+      size: "{{ item.size }}"
+      state: present
+      force: true
+  loop: "{{ lvs }}"
+
+- name: Task for formating the LVs with the given filesystem
+  filesystem:
+    fstype: "{{ item.fstype }}"
+    dev: "/dev/{{ lvg_name }}/{{ item.name }}"
+  loop: "{{ lvs }}"
+
+- name: Task for creating the mount points
+  file:
+    path: "{{ item.mount_point }}"
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+  loop: "{{ lvs }}"
+
+- name: Task to mount the LVs
+  mount:
+    path: "{{ item.mount_point }}"
+    src: "/dev/{{ lvg_name }}/{{ item.name }}"
+    fstype: "{{ item.fstype }}"
+    state: mounted
+  loop: "{{ lvs }}"
+
+- name: Create entries in /etc/fstab
+  mount:
+    path: "{{ item.mount_point }}"
+    src: "/dev/{{ lvg_name }}/{{ item.name }}"
+    fstype: "{{ item.fstype }}"
+    opts: defaults
+    state: present
+  loop: "{{ lvs }}"
+

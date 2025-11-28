@@ -27,7 +27,7 @@
 
     - name: Task for creating volume group on "{{ disks_string }}"
       lvg:
-          vg: sap
+          vg: "{{ lvg_name }}"
           pvs: "{{ disks }}"
           pesize: 16
 
