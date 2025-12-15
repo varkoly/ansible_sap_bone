@@ -1,9 +1,0 @@
-
-hostname:
-  - "{{ ansible_facts.fqhn }}"
-sap_inst_nr:
-  - 10
-sap_sid:
-  - 10
-sap_master_password:
-  - "Secure"

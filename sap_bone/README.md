@@ -1,3 +1,5 @@
 # Ansible Collection - suse.sap_bone
 
-Documentation for the collection.
+This collection provides roles and playbooks to install a SAP Business One Product on a SUSE Linux Enterprise Server
+
+ZZ

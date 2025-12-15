@@ -1,22 +1,31 @@
 #SPDX-License-Identifier: MIT-0
 ---
 # defaults file for sap_hana_bone_partitioning
-hosts:
-  - localhost
-disks:
+lv_hana_data_min: 20000 # Minimum 20 GB
+lv_hana_data_size: "{{ ansible_facts.memory_mb.real.total | max(lv_hana_data_min) }}"
+
+lv_hana_log_min: 20000 # Minimum 20 GB
+lv_hana_log_max: 512000 # Maximum 512 GB
+lv_hana_log_size: "{{ (ansible_facts.memory_mb.real.total | min(lv_hana_log_max)) | max(lv_hana_log_min) }}"
+
+lv_hana_shared_min: 20000 # Minimum 20 GB
+lv_hana_shared_max: 1000000 # Maximum 1 TB
+lv_hana_shared_size: "{{ (ansible_facts.memory_mb.real.total | min(lv_hana_shared_max)) | max(lv_hana_shared_min) }}"
+
+sap_hana_bone_disks:
   - /dev/sdb
-lvg_name: "sap"
-lvs:
+sap_hana_bone_lvg_name: "sap"
+sap_hana_bone_lvs:
   - name: data
-    size: 20G
+    size: "{{ lv_hana_data_size }}"
     fstype: xfs
     mount_point: /hana/data
   - name: log
-    size: 30G
+    size: "{{ lv_hana_log_size }}"
     fstype: xfs
     mount_point: /hana/log
   - name: shared
-    size: "{{ 1.5 * ansible_facts.memory_mb.real.total }}"
+    size: "{{ lv_hana_shared_size }}"
     fstype: xfs
     mount_point: /hana/shared
   - name: usr_sap

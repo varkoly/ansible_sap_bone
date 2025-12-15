@@ -8,12 +8,12 @@
     - suse.sap_install.sap_hana_install
 
   vars:
-    sap_hana_install_software_directory: /software/hana
-    sap_bone_install_software_directory: /software/bone
+    sap_hana_bone_disks:
+      - /dev/sdb
+    sap_hana_install_cleanup_configfile_directory: false
+    sap_hana_install_cleanup_extract_directory: false
     sap_hana_install_common_master_password: 'NewPass$321' 
     sap_hana_install_sid: 'H01'
     sap_hana_install_instance_nr: '00'
-    sap_hana_install_cleanup_configfile_directory: false
-    sap_hana_install_cleanup_extract_directory: false
     hostname: "{{ ansible_facts.fqdn }}"
 

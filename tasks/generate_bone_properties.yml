@@ -1,8 +1,0 @@
-# SPDX-License-Identifier: Apache-2.0
-- name: SAP Business One Pre Install, create parameters file
-  ansible.builtin.template:
-    src: "templates/b1h_properties.j2"
-    dest: "{{ sap_bone_install_software_extract_directory }}/b1h_properties"
-    owner: 'root'
-    group: 'root'
-    mode: '0600'
