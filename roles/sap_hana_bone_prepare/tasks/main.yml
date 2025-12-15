@@ -1,7 +1,7 @@
 #SPDX-License-Identifier: MIT-0
 ---
 # tasks file for sap_hana_bone_prepare
-- name: Ensure required prerequisite packages are installed
+- name: 1. Ensure required prerequisite packages are installed
   ansible.builtin.package:
     name:
       - ansible-sap-install # required for the installation

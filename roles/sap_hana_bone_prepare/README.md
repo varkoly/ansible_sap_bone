@@ -1,22 +1,36 @@
-Role Name
-=========
+# sap_hana_bone_prepare Ansible Role
 
-A brief description of the role goes here.
+Prepare the server for the installation to all required SAP components:
 
-Requirements
-------------
+- Installs the required packages needed by ansible SAP HANA and SAP Business One
+- Creates some required files and directories
+- Generates the SAP Business One parameters file
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+## Role Variables
+### sap_bone_install_software_directory
+- _Type:_ `string`
+- _Default value:_ `/software/bone`
 
-Role Variables
---------------
+Directory where the SAP Business One software is located
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+### sap_bone_install_selected_features
+- _Type:_ `string`
+- _Default value:_ `B1ServerToolsSLD,B1ServerToolsExtensionManager,B1ServerToolsLicense,B1ServerToolsJobService,B1ServerToolsMobileService,B1ServerToolsXApp,B1SLDAgent,B1WebClient,B1BackupService,B1ServerSHR,B1ServerCommonDB,B1ServerHelp_EN,B1ServerAddons,B1ServerOI,B1AnalyticsOlap,B1AnalyticsTomcatEntSearch,B1AnalyticsTomcatDashboard,B1AnalyticsTomcatReplication,B1AnalyticsTomcatConfiguration,B1AnalyticsTomcatPredictiveAnalysis,B1ServiceLayerComponent,B1ElectronicDocumentService,B1APIGatewayService`
 
-Dependencies
-------------
+Comma separated list of Business One features to install
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+### hostname
+- _Type:_ `string`
+- _Default value:_ "{{ ansible_facts.fqdn }}"
+
+### sap_hana_install_common_master_password
+- _Type:_ `string`
+
+### sap_hana_install_sid
+- _Type:_ `string`
+
+### sap_hana_install_instance_nr
+- _Type:_ `string`
 
 Example Playbook
 ----------------
@@ -25,14 +39,20 @@ Including an example of how to use your role (for instance, with variables passe
 
     - hosts: servers
       roles:
-         - { role: username.rolename, x: 42 }
+         - sap_hana_bone_prepare
+    - vars:
+         sap_bone_install_software_directory: /software/sap/bone
+        sap_hana_install_common_master_password: 'NewPass$321'
+        sap_hana_install_sid: 'H01'
+        sap_hana_install_instance_nr: '00'
+
 
 License
 -------
 
-BSD
+
 
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+Peter Varkoly <varkoly@suse.com>
