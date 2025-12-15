@@ -1,0 +1,25 @@
+- name: SAP Business One Server Full Setup
+  hosts: localhost
+  gather_facts: true
+
+  roles:
+    - suse.sap_bone.sap_hana_bone_prepare
+    - suse.sap_bone.sap_hana_bone_partitioning
+
+  tasks:
+    - name: Install lvm2 dependency
+      package:
+        name: lvm2
+        state: present
+
+    - name: Execute Ansible Role sap_hana_install
+      ansible.builtin.include_role:
+        name: suse.sap_install.sap_hana_install
+      vars:
+        sap_hana_install_software_directory: /software/hana
+        sap_hana_install_common_master_password: 'NewPass$321' 
+        sap_hana_install_sid: 'H01'
+        sap_hana_install_instance_nr: '00'
+        sap_hana_install_cleanup_configfile_directory: false
+        sap_hana_install_cleanup_extract_directory: false
+
