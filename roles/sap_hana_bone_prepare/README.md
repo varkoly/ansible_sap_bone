@@ -7,9 +7,27 @@ Prepare the server for the installation to all required SAP components:
 - Generates the SAP Business One parameters file
 
 ## Role Variables
+### sap_hana_install_software_directory
+- _Type:_ `string`
+- _Default value:_ `/software/hana`
+
+Directory where the SAP HANA software is located
+
+### sap_hana_install_software_extract_directory
+- _Type:_ `string`
+- _Default value:_ `/software/extracted/hana`
+
+Directory where the SAP HANA software is located
+
 ### sap_bone_install_software_directory
 - _Type:_ `string`
 - _Default value:_ `/software/bone`
+
+Directory where the SAP Business One software is located
+
+### sap_bone_install_software_extract_directory
+- _Type:_ `string`
+- _Default value:_ `/software/extracted/bone`
 
 Directory where the SAP Business One software is located
 
@@ -35,13 +53,11 @@ Comma separated list of Business One features to install
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
     - hosts: servers
       roles:
          - sap_hana_bone_prepare
     - vars:
-         sap_bone_install_software_directory: /software/sap/bone
+        sap_bone_install_software_directory: /software/sap/bone
         sap_hana_install_common_master_password: 'NewPass$321'
         sap_hana_install_sid: 'H01'
         sap_hana_install_instance_nr: '00'

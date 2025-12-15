@@ -37,9 +37,25 @@
     group: root
     mode: '0755'      # Standard permissions for system directories (rwxr-xr-x)
 
-- name: 5. Ensure "{{ sap_hana_install_software_directory }}" directory exists and has correct ownership
+- name: 4.1 Ensure "{{ sap_hana_install_software_extract_directory }}" directory exists and has correct ownership
+  ansible.builtin.file:
+    path: "{{ sap_hana_install_software_extract_directory }}"
+    state: directory  # Ensures the path exists as a directory
+    owner: root
+    group: root
+    mode: '0755'      # Standard permissions for system directories (rwxr-xr-x)
+
+- name: 5. Ensure "{{ sap_bone_install_software_directory }}" directory exists and has correct ownership
   ansible.builtin.file:
     path: "{{ sap_bone_install_software_directory }}"
+    state: directory  # Ensures the path exists as a directory
+    owner: root
+    group: root
+    mode: '0755'      # Standard permissions for system directories (rwxr-xr-x)
+
+- name: 5.1 Ensure "{{ sap_bone_install_software_extract_directory }}" directory exists and has correct ownership
+  ansible.builtin.file:
+    path: "{{ sap_bone_install_software_extract_directory }}"
     state: directory  # Ensures the path exists as a directory
     owner: root
     group: root
