@@ -3,5 +3,12 @@
 # tasks file for sap_bone_install
 # sap_bone_install_software_directory
 # sap_bone_install_software_extract_directory
-name: 1. Check if the the SAR files are enpacked already 
-  - 
+installer: "{{ sap_bone_install_software_extract_directory }}/Packages.Linux/ServerComponents/install"
+- name: 1. Change file mode of the installer only if it exists
+    ansible.builtin.file:
+      path: "{{ installer }}"
+      mode: '0755'
+      state: file
+
+- name: 2. Start the installation of SAP Bone
+  ansible.builtin.command: "{{ installer }} -i silent -f {{ sap_bone_install_software_extract_directory }}/b1h_properties"
