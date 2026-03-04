@@ -1,0 +1,29 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for sap_hana_install
+- name: Searching for the directory, containing hdblcm.
+  find:
+    paths: "{{ sap_hana_install_software_extract_directory }}"
+    patterns: "hdblcm"
+    recurse: yes
+    file_type: file
+  register: find_hdblcm_result
+
+- name: Set the path as variable (Fact)
+  set_fact:
+    hdblcm_directory: "{{ find_hdblcm_result.files[0].path | dirname }}"
+  when: find_hdblcm_result.matched > 0
+
+- name: Check the path
+  debug:
+    msg: "hdblcm was found in: {{ hdblcm_directory }}"
+
+- name: Install SAP HANA - {{ sap_hana_install_sid }} {{ sap_hana_install_number }}
+  ansible.builtin.command: "./hdblcm --configfile={{ sap_install_temp_dir }}/hana_install.cfg -b"
+  register: __sap_hana_install_register_hdblcm_install_async_job
+  args:
+    chdir: "{{ hdblcm_directory }}"
+  #async: 86400 # Seconds for maximum runtime, set to 24 hours
+  #poll: 0 # Seconds between polls, use 0 to run Ansible Tasks concurrently
+  #changed_when: true
+  when: not ansible_check_mode

@@ -15,8 +15,13 @@ argument_specs:
         type: str # str, list, dict, bool, int, float, path, raw, jsonarg, json, bytes, bits
         required: true
       
-      sap_hana_master_password:
+      sap_hana_install_master_password:
         description: SAP System Master Password Number
         type: str # str, list, dict, bool, int
+        required: true
+
+      sap_hana_bone_disks:
+        description: List of the disks on wich the LVM for HANA will be created
+        type: list
         required: true
       

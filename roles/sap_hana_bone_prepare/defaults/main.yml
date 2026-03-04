@@ -14,6 +14,9 @@ sap_bone_install_software_directory: '/software/bone'
 # Directory into which the archive files will be extracted.
 sap_bone_install_software_extract_directory: "/software/extracted/bone"
 
+# Install temp dir
+sap_bone_install_temp_file: ""
+
 
 sap_bone_install_selected_features: B1ServerToolsSLD,B1ServerToolsExtensionManager,B1ServerToolsLicense,B1ServerToolsJobService,B1ServerToolsMobileService,B1ServerToolsXApp,B1SLDAgent,B1WebClient,B1BackupService,B1ServerSHR,B1ServerCommonDB,B1ServerHelp_EN,B1ServerAddons,B1ServerOI,B1AnalyticsOlap,B1AnalyticsTomcatEntSearch,B1AnalyticsTomcatDashboard,B1AnalyticsTomcatReplication,B1AnalyticsTomcatConfiguration,B1AnalyticsTomcatPredictiveAnalysis,B1ServiceLayerComponent,B1ElectronicDocumentService,B1APIGatewayService
 

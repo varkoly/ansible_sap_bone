@@ -1,0 +1,19 @@
+# --- Minimale SAP HANA Installationskonfiguration ---
+[Installation]
+sid={{ sap_hana_install_sid }}
+
+number={{ sap_hana_install_number }}
+
+sapmnt=/hana/shared
+
+datapath=/hana/data/HDB
+logpath=/hana/log/HDB
+
+password={{ sap_hana_install_master_password }}
+
+hostname={{ hostname }}
+
+components=server,client
+
+action=install
+mode=batch
