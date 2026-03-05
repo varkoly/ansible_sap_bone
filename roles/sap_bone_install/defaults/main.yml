@@ -2,4 +2,3 @@
 ---
 # defaults file for sap_bone_install
 
-sap_bone_installer: "/Packages.Linux/ServerComponents/install"

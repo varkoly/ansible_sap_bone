@@ -1,3 +1,5 @@
 #SPDX-License-Identifier: MIT-0
 ---
 # vars file for sap_bone_install
+
+__sap_bone_installer: "/Packages.Linux/ServerComponents/install"

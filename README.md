@@ -17,10 +17,11 @@ Example playbook:
   gather_facts: true
 
   roles:
-    - sap_hana_bone_prepare
-    - sap_hana_bone_partitioning
-    - suse.sap_install.sap_hana_install
-    - sap_hana_bone_install
+    - suse.sap_bone.sap_hana_bone_prepare
+    - suse.sap_bone.sap_hana_bone_partitioning
+    - suse.sap_bone.sap_hana_install
+    - suse.sap_bone.sap_bone_install
+    - suse.sap_bone.sap_hana_bone_post
 
   vars:
     sap_hana_bone_disks:
@@ -29,6 +30,6 @@ Example playbook:
     sap_hana_install_cleanup_extract_directory: false
     sap_hana_install_common_master_password: 'NewPass$321' 
     sap_hana_install_sid: 'H01'
-    sap_hana_install_instance_nr: '00'
+    sap_hana_install_number: '00'
     hostname: "{{ ansible_facts.fqdn }}"
 ```
