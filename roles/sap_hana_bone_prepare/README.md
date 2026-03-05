@@ -47,7 +47,7 @@ Comma separated list of Business One features to install
 ### sap_hana_install_sid
 - _Type:_ `string`
 
-### sap_hana_install_instance_nr
+### sap_hana_install_number
 - _Type:_ `string`
 
 Example Playbook
@@ -60,7 +60,7 @@ Example Playbook
         sap_bone_install_software_directory: /software/sap/bone
         sap_hana_install_common_master_password: 'NewPass$321'
         sap_hana_install_sid: 'H01'
-        sap_hana_install_instance_nr: '00'
+        sap_hana_install_number: '00'
 
 
 License

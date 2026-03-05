@@ -6,11 +6,11 @@
 
 - name: 1. Change file mode of the installer only if it exists
     ansible.builtin.file:
-      path: "{{ sap_bone_install_software_extract_directory }}/{{ sap_bone_installer }}"
+      path: "{{ sap_bone_install_software_extract_directory }}/{{ __sap_bone_installer }}"
       mode: '0755'
       state: file
 
 - name: 2. Start the installation of SAP Bone
-  ansible.builtin.command: "{{ sap_bone_installer }} -i silent -f {{ sap_bone_install_temp_dir }}/b1h_properties"
+  ansible.builtin.command: "{{ __sap_bone_installer }} -i silent -f {{ sap_install_temp_dir }}/b1h_properties"
   args:
     chdir: "{{ sap_bone_install_software_extract_directory }}"
