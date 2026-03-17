@@ -14,3 +14,39 @@
   ansible.builtin.command: "{{ __sap_bone_installer }} -i silent -f {{ sap_install_temp_dir }}/b1h_properties"
   args:
     chdir: "{{ sap_bone_install_software_extract_directory }}"
+
+- name: Start Business One Installation
+  block:
+    - name: Install SAP Bone - {{ sap_hana_install_sid }} {{ sap_hana_install_number }}
+      ansible.builtin.command: "{{ __sap_bone_installer }} -i silent -f {{ sap_install_temp_dir }}/b1h_properties"
+      register: __sap_bone_install_job
+      args:
+        chdir: "{{ sap_bone_install_software_extract_directory }}"
+      async: 10800 # Seconds for maximum runtime, set to 3 hours
+      poll: 0 # Seconds between polls, use 0 to run Ansible Tasks concurrently
+
+    - name: Wait for the Business One Installation Job to finish
+      ansible.builtin.async_status:
+        jid: "{{ __sap_bone_install_job.ansible_job_id }}"
+      register: __sap_bone_install_job_result  # <--- This holds the stdout/stderr
+      until: __sap_bone_install_job_result.finished
+      retries: 200
+      delay: 30
+
+  rescue:
+    - name: Print failure message
+      ansible.builtin.debug:
+        msg: "Migration failed! Checking logs in the always block..."
+
+  always:
+    - name: Report the command output
+      ansible.builtin.debug:
+        var: __sap_bone_install_job_result.stdout_lines
+      when: __sap_bone_install_job_result.stdout is defined
+
+    - name: Save output to a local file for auditing
+      ansible.builtin.copy:
+        content: "{{ __sap_bone_install_job_result.stdout | default('No output captured') }}"
+        dest: "/tmp/__sap_bone_install_job_result{{ ansible_hostname }}.txt"
+      delegate_to: localhost
+      when: __sap_bone_install_job_result is defined
