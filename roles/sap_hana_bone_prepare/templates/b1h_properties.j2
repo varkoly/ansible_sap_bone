@@ -24,7 +24,7 @@ SL_LB_PORT=50000
 SL_THREAD_PER_SERVER=24
 WEBCLIENT_PORT=8443
 #### flexible part ###
-BCKP_HANA_SERVERS=<servers><server><system address="{{ hostname }}"/><database instance="{{ sap_hana_install_number }}" port="3{{ sap_hana_install_number }}13" tenant-db="{{ sap_hana_install_number }}" user="SYSTEM" password="{{ sap_hana_install_common_master_password }}"/></server></servers>
+BCKP_HANA_SERVERS=<servers><server><system address="{{ hostname }}"/><database instance="{{ sap_hana_install_number }}" port="3{{ sap_hana_install_number }}13" tenant-db="{{ sap_hana_install_number }}" user="SYSTEM" password="{{ sap_hana_install_master_password }}"/></server></servers>
 HANA_DATABASE_ADMIN_ID={{ sap_hana_install_sid }}adm
 HANA_DATABASE_TENANT_DB={{ sap_hana_install_sid }}
 HANA_DATABASE_INSTANCE={{ sap_hana_install_number }}

@@ -41,7 +41,7 @@ Comma separated list of Business One features to install
 - _Type:_ `string`
 - _Default value:_ "{{ ansible_facts.fqdn }}"
 
-### sap_hana_install_common_master_password
+### sap_hana_install_master_password
 - _Type:_ `string`
 
 ### sap_hana_install_sid
@@ -58,7 +58,7 @@ Example Playbook
          - sap_hana_bone_prepare
     - vars:
         sap_bone_install_software_directory: /software/sap/bone
-        sap_hana_install_common_master_password: 'NewPass$321'
+        sap_hana_install_master_password: 'NewPass$321'
         sap_hana_install_sid: 'H01'
         sap_hana_install_number: '00'
 

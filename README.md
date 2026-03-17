@@ -28,7 +28,7 @@ Example playbook:
       - /dev/sdb
     sap_hana_install_cleanup_configfile_directory: false
     sap_hana_install_cleanup_extract_directory: false
-    sap_hana_install_common_master_password: 'NewPass$321' 
+    sap_hana_install_master_password: 'NewPass$321' 
     sap_hana_install_sid: 'H01'
     sap_hana_install_number: '00'
     hostname: "{{ ansible_facts.fqdn }}"

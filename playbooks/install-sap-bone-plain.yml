@@ -17,7 +17,7 @@
         name: suse.sap_install.sap_hana_install
       vars:
         sap_hana_install_software_directory: /software/hana
-        sap_hana_install_common_master_password: 'NewPass$321' 
+        sap_hana_install_master_password: 'NewPass$321' 
         sap_hana_install_sid: 'H01'
         sap_hana_install_number: '00'
         sap_hana_install_cleanup_configfile_directory: false

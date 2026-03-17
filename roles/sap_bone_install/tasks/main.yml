@@ -5,10 +5,10 @@
 # sap_bone_install_software_extract_directory
 
 - name: 1. Change file mode of the installer only if it exists
-    ansible.builtin.file:
-      path: "{{ sap_bone_install_software_extract_directory }}/{{ __sap_bone_installer }}"
-      mode: '0755'
-      state: file
+  ansible.builtin.file:
+    path: "{{ sap_bone_install_software_extract_directory }}/{{ __sap_bone_installer }}"
+    mode: '0755'
+    state: file
 
 - name: 2. Start Business One Installation
   block:

@@ -4,7 +4,6 @@
 - name: 1. Ensure required prerequisite packages are installed
   ansible.builtin.package:
     name:
-      - ansible-sap-install # required for the installation
       - lvm2                # required for the installation
       - unzip               # required for the installation
       - libatomic1          # required for HANA

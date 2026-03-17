@@ -9,10 +9,14 @@
     file_type: file
   register: find_hdblcm_result
 
+- name: Stop if tje sap_hana_install is missing
+  ansible.builtin.fail:
+    msg: "CRITICAL: The HANA installer hdblcm was not found."
+  when: find_hdblcm_result.matched == 0
+
 - name: Set the path as variable (Fact)
   set_fact:
     hdblcm_directory: "{{ find_hdblcm_result.files[0].path | dirname }}"
-  when: find_hdblcm_result.matched > 0
 
 - name: Check the path
   debug:
