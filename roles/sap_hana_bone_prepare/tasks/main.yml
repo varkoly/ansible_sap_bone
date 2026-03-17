@@ -104,8 +104,45 @@
     group: 'root'
     mode: '0600'
 
-- name: 10. Adapt system settings by saptune for HANA
-  ansible.builtin.command: |
-    saptune solution revert $( saptune solution enabled )
-    saptune solution apply HANA
-    saptune service enable
+- name: Saptune Configuration Block
+  block:
+    - name: Check currently enabled saptune solution
+      ansible.builtin.command: saptune solution enabled
+      register: __saptune_check
+      # We don't want this to show as "changed" since it's just a query
+      changed_when: false
+      # Prevent failure if no solution is currently enabled
+      failed_when: false
+
+    - name: Revert and Apply HANA Solution
+      # We use shell here to handle the subshell $(...) syntax
+      ansible.builtin.shell: |
+        saptune solution revert {{ __saptune_check.stdout | trim }}
+        saptune solution apply HANA
+      # ONLY run this if "HANA" is NOT found in the check output
+      when: "'HANA' not in __saptune_check.stdout"
+      async: 600  # Saptune can sometimes be slow
+      poll: 10
+      register: saptune_apply_result
+
+    - name: Ensure saptune service is enabled
+      ansible.builtin.command: saptune service enable
+      # This is usually fast, so no async needed
+      register: service_result
+      # Only show changed if it wasn't already enabled
+      changed_when: "'already enabled' not in service_result.stdout"
+
+  rescue:
+    - name: Report Saptune failure
+      ansible.builtin.debug:
+        msg: "Saptune configuration failed. Check the logs below."
+
+  always:
+    - name: Final Saptune Status
+      ansible.builtin.command: saptune solution verify
+      register: final_verify
+      changed_when: false
+
+    - name: Display Verification Output
+      ansible.builtin.debug:
+        var: final_verify.stdout_lines
