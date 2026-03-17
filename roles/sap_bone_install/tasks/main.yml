@@ -30,8 +30,8 @@
 
   rescue:
     - name: Print failure message
-      ansible.builtin.debug:
-        msg: "Migration failed! Checking logs in the always block..."
+      ansible.builtin.fail:
+        msg: "SAP Bone Installation failed! Checking logs in the always block..."
 
   always:
     - name: Report the command output

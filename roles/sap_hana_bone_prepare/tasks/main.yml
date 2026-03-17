@@ -9,6 +9,7 @@
       - libatomic1          # required for HANA
       - libgcc_s1           # required for HANA
       - libstdc++6          # required for HANA
+      - libltdl7            # required for HANA
       - saptune             # required for HANA
     state: present
     update_cache: yes # Ensure package manager cache is updated before installing
@@ -145,3 +146,7 @@
     - name: Display Verification Output
       ansible.builtin.debug:
         var: final_verify.stdout_lines
+
+- name: Report config files
+  ansible.builtin.debug:
+    msg: "You can find the config files in {{ sap_install_temp_dir }}"
