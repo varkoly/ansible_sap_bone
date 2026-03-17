@@ -10,12 +10,7 @@
       mode: '0755'
       state: file
 
-- name: 2. Start the installation of SAP Bone
-  ansible.builtin.command: "{{ __sap_bone_installer }} -i silent -f {{ sap_install_temp_dir }}/b1h_properties"
-  args:
-    chdir: "{{ sap_bone_install_software_extract_directory }}"
-
-- name: Start Business One Installation
+- name: 2. Start Business One Installation
   block:
     - name: Install SAP Bone - {{ sap_hana_install_sid }} {{ sap_hana_install_number }}
       ansible.builtin.command: "{{ __sap_bone_installer }} -i silent -f {{ sap_install_temp_dir }}/b1h_properties"
