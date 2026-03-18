@@ -22,17 +22,32 @@
   debug:
     msg: "hdblcm was found in: {{ hdblcm_directory }}"
 
-  #changed_when: true
+#- name: Create LSS user {{ sap_hana_install_sid }}crypt
+#  ansible.builtin.user:
+#    name: "{{ sap_hana_install_sid | lower }}crypt"
+#    password: "{{ sap_hana_install_master_password | password_hash('sha512') }}"
+#    home: "/lss/shared/{{ sap_hana_install_sid }}/lss/home"
+#    create_home: yes
+#    shell: /bin/bash
+#    state: present
 
 - name: Start HANA installation
   block:
     - name: Install SAP HANA - {{ sap_hana_install_sid }} {{ sap_hana_install_number }}
-      ansible.builtin.command: "./hdblcm --configfile={{ sap_install_temp_dir }}/hana_install.cfg -b"
+      ansible.builtin.command: "./hdblcm --configfile={{ __sap_install_temp_dir }}/hana_install.cfg -b"
       register: __sap_hana_install_job
       args:
         chdir: "{{ hdblcm_directory }}"
       async: 10800 # Seconds for maximum runtime, set to 3 hours
       poll: 0 # Seconds between polls, use 0 to run Ansible Tasks concurrently
+#   - name: Install SAP HANA - {{ sap_hana_install_sid }} {{ sap_hana_install_number }}
+#     ansible.builtin.shell: "./hdblcm --batch --action=install --lss_trust_unsigned_components --components=all  --sid={{ sap_hana_install_sid }} --number={{ sap_hana_install_number }} --groupid=79 --lss_userid=1100  --read_password_from_stdin=xml"
+#     register: __sap_hana_install_job
+#     args:
+#       chdir: "{{ hdblcm_directory }}"
+#       stdin: "{{ lookup('file', __sap_install_temp_dir ~ '/pwd.xml') }}"
+#     async: 10800 # Seconds for maximum runtime, set to 3 hours
+#     poll: 0 # Seconds between polls, use 0 to run Ansible Tasks concurrently
 
     - name: Wait for the HANA Installation Job to finish
       ansible.builtin.async_status:

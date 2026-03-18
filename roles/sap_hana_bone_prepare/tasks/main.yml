@@ -74,37 +74,45 @@
   ansible.builtin.tempfile:
     state: directory
     suffix: _build
-  register: temp_folder_info
+  register: __temp_folder_info
 
 - name: 7.1 Use the temporary directory path
   ansible.builtin.set_fact:
-    sap_install_temp_dir: "{{ temp_folder_info.path }}"
+    __sap_install_temp_dir: "{{ __temp_folder_info.path }}"
 
 - name: 7.2 Set specific permissions on the temp directory
   ansible.builtin.file:
-    path: "{{ sap_install_temp_dir }}"
+    path: "{{ __sap_install_temp_dir }}"
     mode: '0700'
     owner: "root"
     group: "root"
   become: yes
 
-- name: 8. Create HAN parameters file
+- name: 7.3 Create HANA parameters file
   ansible.builtin.template:
     src: "templates/hana_install.cfg.j2"
-    dest: "{{ sap_install_temp_dir }}/hana_install.cfg"
+    dest: "{{ __sap_install_temp_dir }}/hana_install.cfg"
     owner: 'root'
     group: 'root'
     mode: '0600'
 
-- name: 9. Create Business One parameters file
+#- name: 7.3 Create HANA password file
+#  ansible.builtin.template:
+#    src: "templates/pwd.xml.j2"
+#    dest: "{{ __sap_install_temp_dir }}/pwd.xml"
+#    owner: 'root'
+#    group: 'root'
+#    mode: '0600'
+
+- name: 7.4 Create Business One parameters file
   ansible.builtin.template:
     src: "templates/b1h_properties.j2"
-    dest: "{{ sap_install_temp_dir }}/b1h_properties"
+    dest: "{{ __sap_install_temp_dir }}/b1h_properties"
     owner: 'root'
     group: 'root'
     mode: '0600'
 
-- name: Saptune Configuration Block
+- name: 8 Saptune Configuration Block
   block:
     - name: Check currently enabled saptune solution
       ansible.builtin.command: saptune solution enabled
@@ -149,4 +157,4 @@
 
 - name: Report config files
   ansible.builtin.debug:
-    msg: "You can find the config files in {{ sap_install_temp_dir }}"
+    msg: "You can find the config files in {{ __sap_install_temp_dir }}"
