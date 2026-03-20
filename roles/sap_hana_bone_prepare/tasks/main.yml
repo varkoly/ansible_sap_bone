@@ -11,6 +11,18 @@
       - libstdc++6          # required for HANA
       - libltdl7            # required for HANA
       - saptune             # required for HANA
+      - bind-utils          # required B1
+      - cyrus-sasl          # required B1
+      - firewalld           # required B1
+      - jq                  # required B1
+      - libidn12            # required B1 libidn11 is realy required
+      - libldap2-sap-compat # required B1
+      - libxml2-tools       # required B1
+      - rpm-build           # required B1
+      - xmlstarlet          # required B1
+      - zip                 # required B1
+      - glibc-i18ndata      # required B1
+      - glibc-locale        # required B1
     state: present
     update_cache: yes # Ensure package manager cache is updated before installing
 

@@ -4,16 +4,26 @@
 # sap_bone_install_software_directory
 # sap_bone_install_software_extract_directory
 
-- name: 1. Change file mode of the installer only if it exists
+- name: 1. Check if the installer does exists
+  ansible.builtin.stat:
+    path: "{{ sap_bone_install_software_extract_directory }}/{{ __sap_bone_installer }}"
+  register: file_info
+
+- name: Fail if the file does not exist
+  ansible.builtin.fail:
+    msg: "Can not find the business one installer."
+  when: not file_info.stat.exists
+
+- name: 2. Change file mode of the installer only if it exists
   ansible.builtin.file:
     path: "{{ sap_bone_install_software_extract_directory }}/{{ __sap_bone_installer }}"
     mode: '0755'
     state: file
 
-- name: 2. Start Business One Installation
+- name: 3. Start Business One Installation
   block:
     - name: Install SAP Bone - {{ sap_hana_install_sid }} {{ sap_hana_install_number }}
-      ansible.builtin.command: "{{ __sap_bone_installer }} -i silent -f {{ __sap_install_temp_dir }}/b1h_properties"
+      ansible.builtin.command: "./{{ __sap_bone_installer }} -i silent -f {{ __sap_install_temp_dir }}/b1h_properties"
       register: __sap_bone_install_job
       args:
         chdir: "{{ sap_bone_install_software_extract_directory }}"
