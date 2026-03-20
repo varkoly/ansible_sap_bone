@@ -3,5 +3,5 @@
 # tasks file for sap_hana_bone_post
 - name: Remove the SAP staging directory and all its content
   ansible.builtin.file:
-    path: { sap_install_temp_dir }
+    path: { __sap_install_temp_dir }
     state: absent

@@ -23,7 +23,7 @@ remote_execution=ssh
 verify_signature=n
 
 # Components ( Valid values: all | client | es | ets | lcapps | server | smartda | streaming | rdsync | xs | studio | afl | sca | sop | eml | rme | rtl | trp )
-components=
+components=all
 
 # Install Execution Mode ( Default: standard; Valid values: standard | optimized )
 install_execution_mode=optimized
@@ -145,10 +145,10 @@ home=/usr/sap/{{ sap_hana_install_sid }}/home
 shell=/bin/sh
 
 # System Administrator User ID
-userid=
+userid=2000
 
 # ID of User Group (sapsys)
-groupid=
+groupid=200
 
 # Database User (SYSTEM) Password
 system_user_password={{ sap_hana_install_master_password }}
@@ -292,8 +292,8 @@ lss_userid=
 # Local Secure Store User Group ID
 lss_groupid=
 
-# Local Secure Store User Home Directory ( Default: /usr/sap/{{ sap_hana_install_sid }}/lss/home )
-lss_user_home=/lss/shared/{{ sap_hana_install_sid }}/lss/home
+# Local Secure Store User Home Directory ( Default: /usr/sap/{{ sap_hana_install_sid }}/home )
+lss_user_home=/lss/shared/{{ sap_hana_install_sid }}/home
 
 # Local Secure Store User Login Shell ( Default: /bin/sh )
 lss_user_shell=/bin/sh

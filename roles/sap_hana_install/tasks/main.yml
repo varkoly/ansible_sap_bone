@@ -22,19 +22,30 @@
   debug:
     msg: "hdblcm was found in: {{ hdblcm_directory }}"
 
-#- name: Create LSS user {{ sap_hana_install_sid }}crypt
-#  ansible.builtin.user:
-#    name: "{{ sap_hana_install_sid | lower }}crypt"
-#    password: "{{ sap_hana_install_master_password | password_hash('sha512') }}"
-#    home: "/lss/shared/{{ sap_hana_install_sid }}/lss/home"
-#    create_home: yes
-#    shell: /bin/bash
-#    state: present
+- name: Create LSS user {{ sap_hana_install_sid }}crypt
+  ansible.builtin.user:
+    name: "{{ sap_hana_install_sid | lower }}crypt"
+    password: "{{ sap_hana_install_master_password | password_hash('sha512') }}"
+    home: "/lss/shared/{{ sap_hana_install_sid }}/home"
+    create_home: yes
+    shell: /bin/bash
+    state: present
+
+- name: Ensure "/usr/sap/{{ sap_hana_install_sid }}" directory exists
+  ansible.builtin.file:
+    path: "/usr/sap/{{ sap_hana_install_sid }}"
+    state: directory  # Ensures the path exists as a directory
+    owner: root
+    group: root
+    mode: '0755'      # Standard permissions for system directories (rwxr-xr-x)
+
+- name: Create Symlink from /lss/shared/{{ sap_hana_install_sid }}/ to /usr/sap/{{ sap_hana_install_sid }}/lss
+  ansible.builtin.command: "ln -f -s /lss/shared/{{ sap_hana_install_sid }}/  /usr/sap/{{ sap_hana_install_sid }}/lss"
 
 - name: Start HANA installation
   block:
     - name: Install SAP HANA - {{ sap_hana_install_sid }} {{ sap_hana_install_number }}
-      ansible.builtin.command: "./hdblcm --configfile={{ __sap_install_temp_dir }}/hana_install.cfg -b"
+      ansible.builtin.command: "./hdblcm --configfile={{ __sap_install_temp_dir }}/hana_install.cfg -b --shm_groupid=201"
       register: __sap_hana_install_job
       args:
         chdir: "{{ hdblcm_directory }}"
