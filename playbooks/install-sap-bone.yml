@@ -7,10 +7,11 @@
     - sap_hana_bone_partitioning
     - sap_hana_install
     - sap_bone_install
+    - sap_hana_bone_post
 
   vars:
     sap_hana_bone_disks:
-      - /dev/sdb
+      - /dev/vdb
     sap_hana_install_cleanup_configfile_directory: false
     sap_hana_install_cleanup_extract_directory: false
     sap_hana_install_master_password: 'NewPass$321' 
