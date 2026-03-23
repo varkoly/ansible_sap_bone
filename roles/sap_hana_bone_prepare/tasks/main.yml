@@ -6,6 +6,7 @@
     name:
       - lvm2                # required for the installation
       - unzip               # required for the installation
+      - selinux-policy-sapenablement # required for SAP environment
       - libatomic1          # required for HANA
       - libgcc_s1           # required for HANA
       - libstdc++6          # required for HANA
